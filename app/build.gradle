@@ -1,0 +1,71 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    defaultConfig {
+        applicationId "com.uestc.zigong"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [test_data       : "${TEST_DATA}", jpush_appkey : "${JPUSH_APP_KEY}", UMENG_APPKEY: "${UMENG_APPKEY}"
+                                    , MOB_APP_KEY: "${MOB_APPKEY}", MOB_APP_SECRET: "${MOB_APPSECRET}"]
+            buildConfigField "String", "CERT_CLIENT_PASSWORD", "${CERT_CLIENT_PASSWORD}"
+            buildConfigField "String", "CERT_SERVER_PASSWORD", "${CERT_SERVER_PASSWORD}"
+            buildConfigField "String", "CLIENT_STORE_PASSWORD", "${CLIENT_STORE_PASSWORD}"
+            buildConfigField "String", "CLIENT_CERT_PATH", "${CLIENT_CERT_PATH}"
+            buildConfigField "String", "SERVER_CERT_PATH", "${SERVER_CERT_PATH}"
+            buildConfigField "int", "USE_SSL", "${USE_SSL}"
+            buildConfigField "String", "IP", "${IP}"
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [test_data       : "${TEST_DATA}", jpush_appkey: "${DEBUG_JPUSH_APP_KEY}"
+                                    , UMENG_APPKEY  : "${DEBUG_UMENG_APPKEY}", MOB_APP_KEY: "${DEBUG_MOB_APPKEY}"
+                                    , MOB_APP_SECRET: "${DEBUG_MOB_APPSECRET}"]
+            buildConfigField "String", "CERT_CLIENT_PASSWORD", "${DEBUG_CERT_CLIENT_PASSWORD}"
+            buildConfigField "String", "CERT_SERVER_PASSWORD", "${DEBUG_CERT_SERVER_PASSWORD}"
+            buildConfigField "String", "CLIENT_STORE_PASSWORD", "${DEBUG_CLIENT_STORE_PASSWORD}"
+            buildConfigField "String", "CLIENT_CERT_PATH", "${DEBUG_CLIENT_CERT_PATH}"
+            buildConfigField "String", "SERVER_CERT_PATH", "${DEBUG_SERVER_CERT_PATH}"
+            buildConfigField "int", "USE_SSL", "${DEBUG_USE_SSL}"
+            buildConfigField "String", "IP", "${DEBUG_IP}"
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:design:$rootProject.supportLibraryVersion"
+    implementation "com.android.support.constraint:constraint-layout:$rootProject.constraintLayoutVersion"
+    testImplementation "junit:junit:$rootProject.junitVersion"
+    androidTestImplementation "com.android.support.test:runner:$rootProject.runnerVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
+
+    implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    implementation "com.google.dagger:dagger-android:$rootProject.daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$rootProject.daggerVersion" // if you use the support libraries
+    annotationProcessor "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
+    implementation "com.android.support:multidex:$rootProject.multidexVersion"
+    implementation "com.google.guava:guava:$rootProject.guavaVersion-android"
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-scalars:$rootProject.retrofitVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.loggingInterceptorVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroidVersion"
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxjavaVersion"
+    implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
+    annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
+    implementation "com.jakewharton:butterknife:$rootProject.butterknifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterknifeVersion"
+    implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
+}
